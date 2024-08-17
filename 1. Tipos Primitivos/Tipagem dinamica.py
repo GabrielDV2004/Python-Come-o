@@ -1,6 +1,3 @@
-import os
-
-os.system("sls || clear") # Limpa o terminal
 
 nome = "Marta"
 idade = 22
