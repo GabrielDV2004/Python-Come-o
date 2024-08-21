@@ -35,7 +35,7 @@ def prever_resultado(equipe1, equipe2, estatisticas):
     
     # Sorteia o resultado baseado nas probabilidades ajustadas
     resultado = random.choices(
-        ['Vitória Vitória', 'Vitória Cruzeiro', 'Empate'],
+        ['Vitória Operário', 'Vila Nova', 'Empate'],
         [prob_vitoria1, prob_vitoria2, prob_empate]
     )[0]
     
