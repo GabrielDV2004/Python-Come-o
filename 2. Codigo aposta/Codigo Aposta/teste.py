@@ -10,8 +10,8 @@ def prever_resultado(equipe1, equipe2, estatisticas):
     Prevê o resultado de uma partida entre equipe1 e equipe2 com base nas estatísticas fornecidas.
     
     Parameters:
-    equipe1 (str): Vitória
-    equipe2 (str): Cruzeiro
+    equipe1 (str): Palmeiras
+    equipe2 (str): Cuiabá
     estatisticas (dict): Dicionário contendo estatísticas das equipes
     
     Returns:
@@ -35,7 +35,7 @@ def prever_resultado(equipe1, equipe2, estatisticas):
     
     # Sorteia o resultado baseado nas probabilidades ajustadas
     resultado = random.choices(
-        ['Vitória Operário', 'Vila Nova', 'Empate'],
+        ['Vitória Clube Atlético Mineiro', 'Fluminense', 'Empate'],
         [prob_vitoria1, prob_vitoria2, prob_empate]
     )[0]
     
