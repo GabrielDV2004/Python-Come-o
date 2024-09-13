@@ -1,56 +1,46 @@
-import os
+import json
+import requests
+import config as cfg
 
-os.system("sls || clear") # Limpa o terminal
 
-import random
-
-# Função para prever o resultado de uma partida
-def prever_resultado(equipe1, equipe2, estatisticas):
+def get_info_from_api(team_name):
     """
-    Prevê o resultado de uma partida entre equipe1 e equipe2 com base nas estatísticas fornecidas.
-    
-    Parameters:
-    equipe1 (str): Palmeiras
-    equipe2 (str): Cuiabá
-    estatisticas (dict): Dicionário contendo estatísticas das equipes
-    
-    Returns:
-    str: Resultado previsto da partida
+    getting some additional information about the teams and enriching our database
+    thanks to the free API from thesportsdb.com/api.php
+    :param team_name: team of the name to download more info to
+    :return: a dictionary with some extra info about the team.
     """
-    
-    # Estatísticas das equipes
-    v1, e1, d1 = estatisticas[equipe1]
-    v2, e2, d2 = estatisticas[equipe2]
-    
-    # Probabilidades baseadas nas taxas de vitória
-    prob_vitoria1 = v1 / (v1 + v2 + e1 + e2 + d1 + d2)
-    prob_vitoria2 = v2 / (v1 + v2 + e1 + e2 + d1 + d2)
-    prob_empate = (e1 + e2) / (v1 + v2 + e1 + e2 + d1 + d2)
-    
-    # Ajuste as probabilidades para somarem 1
-    total_prob = prob_vitoria1 + prob_vitoria2 + prob_empate
-    prob_vitoria1 /= total_prob
-    prob_vitoria2 /= total_prob
-    prob_empate /= total_prob
-    
-    # Sorteia o resultado baseado nas probabilidades ajustadas
-    resultado = random.choices(
-        ['Vitória Clube Atlético Mineiro', 'Fluminense', 'Empate'],
-        [prob_vitoria1, prob_vitoria2, prob_empate]
-    )[0]
-    
-    return resultado
-
-# Estatísticas de exemplo
-estatisticas = {
-    'EquipeA': (10, 5, 3),  # (vitórias, empates, derrotas)
-    'EquipeB': (8, 6, 4)
-}
-
-# Nome das equipes
-equipe1 = 'EquipeA'
-equipe2 = 'EquipeB'
-
-# Previsão
-resultado = prever_resultado(equipe1, equipe2, estatisticas)
-print(f'O resultado previsto para o jogo entre {equipe1} e {equipe2} é: {resultado}')
+    if "-" in team_name:
+        team_name = team_name.replace("-", "+")
+    if "brighton" in team_name:     # some teams has different names than in sofa-score
+        team_name = "brighton"
+    if "leicester" in team_name:
+        team_name = "leicester"
+    if "norwich" in team_name:
+        team_name = "norwich"
+    if "mallorca" in team_name:
+        team_name = "mallorca"
+    if "parma" in team_name:
+        team_name = "parma+calcio"
+    if "bayern" in team_name:
+        team_name = "bayern"
+    if "koln" in team_name:
+        team_name = "fc+koln"
+    if "union+berlin" in team_name:
+        team_name = "union+berlin"
+    if "fsv+mainz" in team_name:
+        team_name = "mainz"
+    if "hoffenheim" in team_name:
+        team_name = "hoffenheim"
+    if "mgladbach" in team_name:
+        team_name = "borussia+monchengladbach"
+    if "schalke" in team_name:
+        team_name = "schalke"
+    if "leverkusen" in team_name:
+        team_name = "leverkusen"
+    if "paderborn" in team_name:
+        team_name = "paderborn"
+    print(team_name)
+    response = requests.get(cfg.API_URL + team_name)
+    team_data = json.loads(response.text)
+    return team_data['teams'][0]

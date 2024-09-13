@@ -18,7 +18,7 @@ import os
 
 os.system("cls || clear")
 
-def calcular_soma(primeiro_numero, segundo_numero):
+def calcular_soma(primeiro_numero, segundo_numero):    
     soma = primeiro_numero + segundo_numero
     #Tem como colocar print(f"(soma: {soma}")
     return soma
